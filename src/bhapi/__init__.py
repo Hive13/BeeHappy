@@ -12,7 +12,8 @@ import os, datetime, uuid, logging
 # Flask and extensions
 from flask import Flask, session, render_template, g
 from werkzeug.middleware.proxy_fix import ProxyFix
-from flask_session import Session
+# import this as FSession because we have a model object called Session
+from flask_session import Session as FSession
 from flask_sqlalchemy import SQLAlchemy
 import flask_migrate
 
@@ -84,7 +85,7 @@ def create_app():
       app.logger.info("Using temporary storage for FileSystemCache backed sessions")
       app.config["SESSION_CACHELIB"] = FileSystemCache(cache_dir=app.instance_path + "/sessions")
   
-  Session(app)
+  FSession(app)
 
   # Implement proxyfix for when running the dev server or behind nginx
   app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1, x_for=1, x_prefix=1)
