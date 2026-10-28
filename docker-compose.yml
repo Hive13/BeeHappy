@@ -62,6 +62,18 @@ services:
       - source: bhapi-config
         target: bhapi_config.py
 
+  web:
+    image: nginx:alpine-slim
+    depends_on:
+      - app
+    networks:
+      - bhapi-net
+    ports:
+      - "8050:80"
+    configs:
+      - source: nginx
+        target: /etc/nginx/nginx.conf
+
 networks:
   bhapi-net:
 
@@ -74,6 +86,8 @@ volumes:
   valkey-data:
 
 configs:
+  nginx:
+    file: ./configs/nginx/nginx.conf
   pg-bhapi-init:
     file: ./configs/postgres/00-bhapi-init.sh
 
