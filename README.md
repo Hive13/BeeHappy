@@ -13,6 +13,7 @@ BeeHappy is delivered as a Docker Compose stack. The open-source Docker Engine i
 * `postgresql`: PostgreSQL 16 database server with PL/Python3 running on Debian 13
 * `valkey`: Valkey (Redis-compatible key/value store) to hold server-side session data
 * `app`: The BHAPI application running on Alpine Linux
+* `web`: Nginx reverse proxy running on Alpine Linux
 
 ### Docker named volumes
 * `pg-data`: PostgreSQL data store
