@@ -230,7 +230,7 @@ class Member(Base):
   # Table columns
   fname: so.Mapped[str] = so.mapped_column(sa.String(255))
   lname: so.Mapped[str] = so.mapped_column(sa.String(255))
-  phone: so.Mapped[Optional[int]] = so.mapped_column()
+  phone: so.Mapped[Optional[int]] = so.mapped_column(sa.BigInteger)
   created_at: so.Mapped[datetime.datetime] = so.mapped_column(sa.DateTime().with_variant(sa.TIMESTAMP(timezone=True), "postgresql"), default=datetime.datetime.now(tz=ZoneInfo(default_config.APP_TIMEZONE)))
   updated_at: so.Mapped[datetime.datetime] = so.mapped_column(sa.DateTime().with_variant(sa.TIMESTAMP(timezone=True), "postgresql"), default=datetime.datetime.now(tz=ZoneInfo(default_config.APP_TIMEZONE)))
   email: so.Mapped[str] = so.mapped_column(unique=True)
@@ -332,14 +332,14 @@ class StorageSlot(Base):
   # Table columns
   slot_id: so.Mapped[uuid.UUID] = so.mapped_column(primary_key=True, default=uuid.uuid4)
   name: so.Mapped[str] = so.mapped_column()
-  member_id: so.Mapped[uuid.UUID] = so.mapped_column(sa.ForeignKey("members.member_id"))
+  member_id: so.Mapped[Optional[uuid.UUID]] = so.mapped_column(sa.ForeignKey("members.member_id"))
   location_id: so.Mapped[uuid.UUID] = so.mapped_column(sa.ForeignKey("storage_location.location_id"))
   sort_order: so.Mapped[int] = so.mapped_column(default=1000)
   type_id: so.Mapped[uuid.UUID] = so.mapped_column(sa.ForeignKey("storage_slot_type.type_id"))
   expire_date: so.Mapped[Optional[datetime.datetime]] = so.mapped_column(sa.DateTime().with_variant(sa.TIMESTAMP(timezone=True), "postgresql"))
 
   # Relationship definitions
-  member: so.Mapped["Member"] = so.relationship(back_populates="storage_slots")
+  member: so.Mapped[Optional["Member"]] = so.relationship(back_populates="storage_slots")
   location: so.Mapped["StorageLocation"] = so.relationship(back_populates="storage_slots")
   slot_type: so.Mapped["StorageSlotType"] = so.relationship(back_populates="storage_slots")
   storage_requests: so.Mapped[List["StorageRequest"]] = so.relationship(back_populates="slot")
@@ -445,7 +445,7 @@ class Application(Base):
   state: so.Mapped[Optional[str]] = so.mapped_column(sa.String(2))
   zip: so.Mapped[Optional[str]] = so.mapped_column(sa.String(9))
   contact_name: so.Mapped[Optional[str]] = so.mapped_column()
-  contact_phone: so.Mapped[Optional[int]] = so.mapped_column()
+  contact_phone: so.Mapped[Optional[int]] = so.mapped_column(sa.BigInteger)
   form_id: so.Mapped[Optional[uuid.UUID]] = so.mapped_column(sa.ForeignKey("image.image_id"))
   topic_id: so.Mapped[Optional[str]] = so.mapped_column()
   picture_id: so.Mapped[Optional[uuid.UUID]] = so.mapped_column(sa.ForeignKey("image.image_id"))
