@@ -206,7 +206,7 @@ class Survey(Base):
   survey_id: so.Mapped[uuid.UUID] = so.mapped_column(primary_key=True, default=uuid.uuid4)
   title: so.Mapped[Optional[str]] = so.mapped_column()
   name: so.Mapped[Optional[str]] = so.mapped_column()
-  json_data: so.Mapped[Optional[dict]] = so.mapped_column(sa.JSONB)
+  json_data: so.Mapped[Optional[dict]] = so.mapped_column(sa.dialects.postgresql.JSONB)
 
   # Relationship definitions
   survey_questions: so.Mapped[List["SurveyQuestion"]] = so.relationship(back_populates="survey")
