@@ -1,0 +1,23 @@
+.venv/
+
+*.pyc
+__pycache__/
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+dist/
+build/
+*.egg-info/
+
+# Flask specific
+.flaskenv
+flask_session/
+
+# BHAPI stack specific
+env/*-override.env
+secrets/
+
+# please forgive me for developing on a Mac sometimes
+.DS_Store
