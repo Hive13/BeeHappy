@@ -21,6 +21,34 @@ constraint_naming_conventions = {
 class Base(so.DeclarativeBase):
   metadata = sa.MetaData(naming_convention=constraint_naming_conventions)
 
+# Device/Item
+device_item_assoc = sa.Table(
+  "device_item",
+  Base.metadata,
+  sa.Column("device_id", sa.ForeignKey("device.device_id"), nullable=False),
+  sa.Column("item_id", sa.ForeignKey("item.item_id"), nullable=False),
+  sa.PrimaryKeyConstraint("device_id", "item_id")
+)
+
+# Item/Mgroup
+item_mgroup_assoc = sa.Table(
+  "item_mgroup", 
+  Base.metadata,
+  sa.Column("item_id", sa.ForeignKey("item.item_id"), nullable=False),
+  sa.Column("mgroup_id", sa.ForeignKey("mgroup.mgroup_id"), nullable=False),
+  sa.PrimaryKeyConstraint("item_id", "mgroup_id")
+)
+
+# Member/Mgroup
+member_mgroup_assoc = sa.Table(
+  "member_mgroup", 
+  Base.metadata,
+  sa.Column("member_id", sa.ForeignKey("members.member_id"), nullable=False),
+  sa.Column("mgroup_id", sa.ForeignKey("mgroup.mgroup_id"), nullable=False),
+  sa.PrimaryKeyConstraint("member_id", "mgroup_id")
+)
+
+
 # Curse
 class Curse(Base):
   __tablename__ = "curse"
@@ -194,33 +222,6 @@ class CurseAction(Base):
   path: so.Mapped[str] = so.mapped_column()
   action: so.Mapped[str] = so.mapped_column()
   message: so.Mapped[str] = so.mapped_column(sa.Text)
-
-# Device/Item
-device_item_assoc = sa.Table(
-  "device_item",
-  Base.metadata,
-  sa.Column("device_id", sa.ForeignKey("device.device_id"), nullable=False),
-  sa.Column("item_id", sa.ForeignKey("item.item_id"), nullable=False),
-  sa.PrimaryKeyConstraint("device_id", "item_id")
-)
-
-# Item/Mgroup
-item_mgroup_assoc = sa.Table(
-  "item_mgroup", 
-  Base.metadata,
-  sa.Column("item_id", sa.ForeignKey("item.item_id"), nullable=False),
-  sa.Column("mgroup_id", sa.ForeignKey("mgroup.mgroup_id"), nullable=False),
-  sa.PrimaryKeyConstraint("item_id", "mgroup_id")
-)
-
-# Member/Mgroup
-member_mgroup_assoc = sa.Table(
-  "member_mgroup", 
-  Base.metadata,
-  sa.Column("member_id", sa.ForeignKey("members.member_id"), nullable=False),
-  sa.Column("mgroup_id", sa.ForeignKey("mgroup.mgroup_id"), nullable=False),
-  sa.PrimaryKeyConstraint("member_id", "mgroup_id")
-)
 
 # Members table
 class Member(Base):
