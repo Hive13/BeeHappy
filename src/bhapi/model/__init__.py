@@ -532,7 +532,7 @@ class MemberCurse(Base):
 class MemberPanel(Base):
   __tablename__ = "member_panel"
   __table_args__ = (
-    sa.PrimaryKeyConstraint("member_id", "panel_id")
+    sa.PrimaryKeyConstraint("member_id", "panel_id"),
   )
 
   # Table columns
@@ -564,7 +564,7 @@ class Payment(Base):
 class PurchaseSoda(Base):
   __tablename__ = "purchase_soda"
   __table_args__ = (
-    sa.PrimaryKeyConstraint("purchase_id", "soda_id")
+    sa.PrimaryKeyConstraint("purchase_id", "soda_id"),
   )
   
   # Table columns
