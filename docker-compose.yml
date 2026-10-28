@@ -25,10 +25,9 @@ services:
     configs:
       - source: pg-bhapi-init
         target: /docker-entrypoint-initdb.d/00-bhapi-init.sh
-        mode: 0555
     secrets:
       - pg-password
-      - pg-eapps-password
+      - pg-bhapi-password
   
   valkey:
     image: valkey/valkey:7.2
@@ -53,7 +52,8 @@ services:
     restart: unless-stopped
     env_file:
       - ./env/bhapi-default.env
-      - ./env/bhapi-override.env
+      - path: ./env/bhapi-override.env
+        required: false
     expose:
       - "5001"
     networks:
@@ -94,7 +94,7 @@ configs:
 secrets:
   pg-password:
     file: ./secrets/pg-password
-  pg-eapps-password:
+  pg-bhapi-password:
     file: ./secrets/pg-bhapi-password
   bhapi-config:
     file: ./secrets/bhapi_config.py
