@@ -20,3 +20,6 @@ SESSION_TYPE="cachelib"
 
 # Application time zone
 APP_TIMEZONE = "America/New_York"
+
+# Log level
+BHAPI_LOG_LEVEL = "INFO"
